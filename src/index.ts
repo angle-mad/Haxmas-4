@@ -34,6 +34,14 @@ import { Hono } from "hono"
 
 app.get("/", (c) => c.text("Beans!"))
 
-export default app
+// At the bottom of src/index.ts
 
+// Determine the port: use the environment variable PORT, or default to 3000
+const port = Number(process.env.PORT) || 3000
+
+// Export the Bun server configuration
+export default {
+  port,
+  fetch: app.fetch, // Assuming your Hono app is named 'app'
+}
 
