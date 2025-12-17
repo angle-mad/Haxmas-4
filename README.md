@@ -10,5 +10,20 @@ bun run dev
 
 open http://localhost:3000
 
+https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/
+
+https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes
+
 Windows Powershell Commands:
-<img width="1306" height="947" alt="image" src="https://github.com/user-attachments/assets/09501297-271c-4b6c-aa61-488c654f04e5" />
+
+GET-List all wishes
+Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes"
+
+POST- Create a new wish
+Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes" -Method POST -ContentType "application/json" -Body '{"item":"toy"}'
+
+PATCH - Mark wish as fulfilled
+Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes/1/fulfill" -Method PATCH
+
+DELETE - Delete a wish 
+Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes/1" -Method DELETE
