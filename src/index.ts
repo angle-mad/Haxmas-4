@@ -32,8 +32,29 @@ app.delete("/api/wishes/:id", (c) => {
 })
 
 app.get("/", (c) => c.html(`
-  <h1>Welcome to My Wishes API! 🎄</h1>
-  <p><a href="/api/wishes">View all wishes</a></p>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <style>
+        body {
+          background-color: #1a472a;
+          color: white;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 50px;
+        }
+        a {
+          color: #cc3535ff;
+          text-decoration: underline;
+          font-size: 20px;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Welcome to My Wishes API! 🎄</h1>
+      <p><a href="api/wishes">View all wishes</a></p>
+    </body>
+  </html>
 `))
 
 // At the bottom of src/index.ts
