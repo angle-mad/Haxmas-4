@@ -2,3 +2,5 @@
 node_modules/
 .env
 database.sqlite3
+./my.db
+my.db

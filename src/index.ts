@@ -1,3 +1,4 @@
+import { Hono } from "hono"
 import { createWish, deleteWish, fulfillWish, listWishes } from "./db/queries"
 const app = new Hono();
 app.get("/api/wishes", (c) => c.json(listWishes()))
@@ -29,8 +30,6 @@ app.delete("/api/wishes/:id", (c) => {
 
   return c.json({ ok: true })
 })
-
-import { Hono } from "hono"
 
 app.get("/", (c) => c.text("Beans!"))
 
