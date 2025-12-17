@@ -7,13 +7,11 @@ To run:
 ```sh
 bun run dev
 ```
-
+Local: 
 open http://localhost:3000
 
+Deployed: 
 https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/
-
-https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes
-
 
 Windows Powershell Commands:
 
