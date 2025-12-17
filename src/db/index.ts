@@ -11,7 +11,6 @@ sqlite.run(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item TEXT NOT NULL,
     fulfilled INTEGER NOT NULL DEFAULT 0,
-    temp_column TEXT,
     created_at INTEGER NOT NULL
   )
 `)
