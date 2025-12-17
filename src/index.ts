@@ -31,7 +31,6 @@ app.delete("/api/wishes/:id", (c) => {
   return c.json({ ok: true })
 })
 
-app.get("/", (c) => c.text("Beans!"))
 app.get("/", (c) => c.html(`
   <h1>Welcome to My Wishes API! 🎄</h1>
   <p><a href="/api/wishes">View all wishes</a></p>
