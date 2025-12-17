@@ -32,6 +32,10 @@ app.delete("/api/wishes/:id", (c) => {
 })
 
 app.get("/", (c) => c.text("Beans!"))
+app.get("/", (c) => c.html(`
+  <h1>Welcome to My Wishes API! 🎄</h1>
+  <p><a href="/api/wishes">View all wishes</a></p>
+`))
 
 // At the bottom of src/index.ts
 
