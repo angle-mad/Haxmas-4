@@ -56,9 +56,9 @@ GET-List all wishes
 
 DELETE - Delete a wish 
 <!--Local-->
-```Invoke-RestMethod -Uri "http://localhost:3000/api/wishes/1/" -Method DELETE```
+```Invoke-RestMethod -Uri "http://localhost:3000/api/wishes/1" -Method DELETE```
 
-```Invoke-RestMethod -Uri "http://localhost:3000/api/cookies/1/" -Method DELETE```
+```Invoke-RestMethod -Uri "http://localhost:3000/api/cookies/1" -Method DELETE```
 
 <!--Deployed-->
 ```Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes/1" -Method DELETE```
