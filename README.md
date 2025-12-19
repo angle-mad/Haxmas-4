@@ -23,6 +23,8 @@ POST- Create a new wish
 
 ``` Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes" -Method POST -ContentType "application/json" -Body '{"item":"toy"}'```
 
+```"http://localhost:3000/api/wishes" -Method POST -ContentType "application/json" -Body '{"item":"toy"}'```
+
 PATCH - Mark wish as fulfilled
 
 ``` Invoke-RestMethod -Uri "https://fastdeploy.deployor.dev/u/ident!5mfL4W/Haxmas-4/api/wishes/1/fulfill" -Method PATCH```
