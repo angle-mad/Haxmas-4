@@ -4,3 +4,4 @@ node_modules/
 database.sqlite3
 ./my.db
 my.db
+.vercel
