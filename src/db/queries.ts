@@ -1,8 +1,8 @@
 import { db } from "./index"
-import { wishes, cookies } from "./schema"
+import { wishes, cookies, snow } from "./schema"
 import { eq, desc } from "drizzle-orm"
 
-//Wishes functions (Items,)
+//Wishes functions
 export function listWishes() {
   return db.select().from(wishes).orderBy(desc(wishes.id)).all()
 }
@@ -35,7 +35,7 @@ export function deleteWish(id: number) {
 }
 
 
-//Cookies functions (Cookie)
+//Cookies functions
 export function listCookies() {
   return db.select().from(cookies).orderBy(desc(cookies.id)).all()
 }
@@ -67,5 +67,37 @@ export function eatCookie(id: number) {
 
 export function deleteCookie(id: number) {
   const res = db.delete(cookies).where(eq(cookies.id, id)).run()
+  return { changes: res.changes }
+}
+
+
+//Snow functions
+export function listSnow() {
+  return db.select().from(snow).orderBy(desc(snow.id)).all()
+}
+
+export function createSnow(item: string) {
+  const createdAt = Math.floor(Date.now() / 1000)
+
+  const res = db.insert(snow).values({
+    item,
+    fun: 0,
+    createdAt,
+  }).run()
+
+  return { id: Number(res.lastInsertRowid) }
+}
+
+export function funSnow(id: number) {
+  const res = db.update(snow)
+    .set({ fun: 1 })
+    .where(eq(snow.id, id))
+    .run()
+
+  return { changes: res.changes }
+}
+
+export function deleteSnow(id: number) {
+  const res = db.delete(snow).where(eq(snow.id, id)).run()
   return { changes: res.changes }
 }

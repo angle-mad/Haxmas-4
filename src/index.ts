@@ -1,6 +1,8 @@
 import { Hono } from "hono"
-import { createWish, deleteWish, fulfillWish, listWishes, createCookie, deleteCookie, eatCookie, listCookies} from "./db/queries"
+import { createWish, deleteWish, fulfillWish, listWishes, createCookie, deleteCookie, eatCookie, listCookies, listSnow, createSnow, funSnow, deleteSnow, } from "./db/queries"
 const app = new Hono();
+
+//Wishes App
 app.get("/api/wishes", (c) => c.json(listWishes()))
 
 app.post("/api/wishes", async (c) => {
@@ -31,7 +33,7 @@ app.delete("/api/wishes/:id", (c) => {
   return c.json({ ok: true })
 })
 
-//Cookie :
+//Cookies App
 app.get("/api/cookies", (c) => c.json(listCookies()))
 
 app.post("/api/cookies", async (c) => {
@@ -57,6 +59,38 @@ app.delete("/api/cookies/:id", (c) => {
   if (!Number.isFinite(id)) return c.json({ error: "bad id" }, 400)
 
   const res = deleteCookie(id)
+  if (res.changes === 0) return c.json({ error: "not found" }, 404)
+
+  return c.json({ ok: true })
+})
+
+
+//Snow App
+app.get("/api/snow", (c) => c.json(listSnow()))
+
+app.post("/api/snow", async (c) => {
+  const body = await c.req.json().catch(() => null)
+  const item = (body?.item ?? "").toString().trim()
+  if (!item) return c.json({ error: "item is required" }, 400)
+
+  return c.json(createSnow(item), 201)
+})
+
+app.patch("/api/snow/:id/fun", (c) => {
+  const id = Number(c.req.param("id"))
+  if (!Number.isFinite(id)) return c.json({ error: "bad id" }, 400)
+
+  const res = funSnow(id)
+  if (res.changes === 0) return c.json({ error: "not found" }, 404)
+
+  return c.json({ ok: true })
+})
+
+app.delete("/api/snow/:id", (c) => {
+  const id = Number(c.req.param("id"))
+  if (!Number.isFinite(id)) return c.json({ error: "bad id" }, 400)
+
+  const res = deleteSnow(id)
   if (res.changes === 0) return c.json({ error: "not found" }, 404)
 
   return c.json({ ok: true })
@@ -89,10 +123,11 @@ app.get("/", (c) => c.html(`
     </head>
     <body>
       <h1>🎀 Welcome to my Christmas Themed Homepage 🎀</h1>
-      <p> Click the Links below to view my list of wishes and the list of my favorite cookies!</p>
+      <p> Click the Links below to view my list of wishes, the list of my favorite cookies and favorite snow activities!</p>
 
       <p><a href="api/wishes">View my Christmas wishes 🎁</a></p>
       <p><a href="api/cookies">View my Favorite cookies 🍪</a></p>
+      <p><a href="api/snow">View my Favorite snow activities ❄️</a></p>
     </body>
 
   </html>
