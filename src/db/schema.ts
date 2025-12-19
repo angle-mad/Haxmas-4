@@ -7,3 +7,10 @@ export const wishes = sqliteTable("wishes", {
     fulfilled: integer("fulfilled").notNull().default(0),
     createdAt: integer("created_at").notNull(),
 });
+
+export const cookies = sqliteTable("cookies", {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    item: text("item").notNull(),
+    eaten: integer("eaten").notNull().default(0),
+    createdAt: integer("created_at").notNull(),
+});

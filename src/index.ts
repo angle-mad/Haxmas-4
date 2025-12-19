@@ -1,5 +1,5 @@
 import { Hono } from "hono"
-import { createWish, deleteWish, fulfillWish, listWishes } from "./db/queries"
+import { createWish, deleteWish, fulfillWish, listWishes, createCookie, deleteCookie, eatCookie, listCookies} from "./db/queries"
 const app = new Hono();
 app.get("/api/wishes", (c) => c.json(listWishes()))
 
@@ -31,6 +31,38 @@ app.delete("/api/wishes/:id", (c) => {
   return c.json({ ok: true })
 })
 
+//Cookie :
+app.get("/api/cookies", (c) => c.json(listCookies()))
+
+app.post("/api/cookies", async (c) => {
+  const body = await c.req.json().catch(() => null)
+  const item = (body?.item ?? "").toString().trim()
+  if (!item) return c.json({ error: "item is required" }, 400)
+
+  return c.json(createCookie(item), 201)
+})
+
+app.patch("/api/cookies/:id/eat", (c) => {
+  const id = Number(c.req.param("id"))
+  if (!Number.isFinite(id)) return c.json({ error: "bad id" }, 400)
+
+  const res = eatCookie(id)
+  if (res.changes === 0) return c.json({ error: "not found" }, 404)
+
+  return c.json({ ok: true })
+})
+
+app.delete("/api/cookies/:id", (c) => {
+  const id = Number(c.req.param("id"))
+  if (!Number.isFinite(id)) return c.json({ error: "bad id" }, 400)
+
+  const res = deleteCookie(id)
+  if (res.changes === 0) return c.json({ error: "not found" }, 404)
+
+  return c.json({ ok: true })
+})
+
+
 app.get("/", (c) => c.html(`
   <!DOCTYPE html>
   <html>
@@ -38,33 +70,40 @@ app.get("/", (c) => c.html(`
       <style>
         body {
           background-color: #1a472a;
+          text-align: center;
+          }
+        h1 {
           color: white;
           font-family: Arial, sans-serif;
-          text-align: center;
-          padding: 50px;
         }
         a {
           color: #cc3535ff;
           text-decoration: underline;
           font-size: 20px;
         }
+        p{
+          color: #D4AF37;
+        }
+
       </style>
     </head>
     <body>
-      <h1>Welcome to My Wishes API! 🎄</h1>
-      <p><a href="api/wishes">View all wishes</a></p>
+      <h1>🎀 Welcome to my Christmas Themed Homepage 🎀</h1>
+      <p> Click the Links below to view my list of wishes and the list of my favorite cookies!</p>
+
+      <p><a href="api/wishes">View my Christmas wishes 🎁</a></p>
+      <p><a href="api/cookies">View my Favorite cookies 🍪</a></p>
     </body>
+
   </html>
 `))
 
-// At the bottom of src/index.ts
 
-// Determine the port: use the environment variable PORT, or default to 3000
 const port = Number(process.env.PORT) || 3000
 
-// Export the Bun server configuration
+
 export default {
   port,
-  fetch: app.fetch, // Assuming your Hono app is named 'app'
+  fetch: app.fetch, 
 }
 
